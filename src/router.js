@@ -12,8 +12,8 @@ export default new VueRouter({
   routes: [
     { path: "/", component: Index },
     { path: "/loading", component: Loading },
-    { path: "/home", component: Home },
-    { path: "/processing", component: Processing },
+    { path: "/home", component: Processing },
+    { path: "/processing", component: Home },
     { path: "/complete", component: Complete },
   ],
 });

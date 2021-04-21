@@ -2,6 +2,9 @@
   <v-app>
     <div class="title-e2z0">
       <span @click="openBrowser">Trading View SSF_Strategy</span>
+      <span v-if="$route.path === '/home'">
+        <v-btn small color="light-blue" class="stop-btn" @click="click">STOP</v-btn>
+      </span>
     </div>
     <v-main>
       <router-view></router-view>
@@ -39,11 +42,14 @@ export default {
   },
   methods: {
     openBrowser() {
-      window.electron.openURL("https://kr.tradingview.com/chart/ys4lPZUt/");
+      window.electron.openURL("https://kr.tradingview.com/chart/p4T09PUd/");
     },
     closeSnackbar() {
       this.$store.dispatch("delMessage");
     },
+    click() {
+      console.log(this.$route.path);
+    }
   },
 };
 </script>
@@ -53,8 +59,14 @@ export default {
   color: #2196f3;
   font-weight: 600;
   padding: 5px 10px;
+  display: flex;
+  justify-content: space-between;
   span {
     cursor: pointer;
   }
+}
+.stop-btn {
+  color: #fff !important;
+  border-radius: 0;
 }
 </style>
