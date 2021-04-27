@@ -636,8 +636,15 @@
         </v-col>
       </v-row>
       <div :class="active">
-        <v-btn elevation="2" large block class="txt-bold" @click="submit">
-          확인
+        <v-btn
+          elevation="2"
+          large
+          block
+          class="txt-bold"
+          :disabled="disabled"
+          @click="submit"
+        >
+          {{ btnText }}
         </v-btn>
       </div>
     </div>
@@ -647,6 +654,8 @@
 export default {
   data() {
     return {
+      disabled: false,
+      btnText: "확인",
       start: "2019-01-01",
       end: "2020-12-31",
       leverage: 2,
@@ -742,11 +751,8 @@ export default {
   },
   methods: {
     submit() {
-      if (window.confirm("작업을 시작하시겠습니까?")) {
-        window.socket.send(
-          JSON.stringify(["work", JSON.stringify(this.$data)])
-        );
-      }
+      this.disabled = true;
+      this.btnText = "작업 시작중...";
     },
     onScroll() {
       if (

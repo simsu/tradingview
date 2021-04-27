@@ -8,11 +8,11 @@
             color="primary"
           ></v-progress-circular>
         </div>
-        <div>
+        <!-- <div>
           <span>
             데이터를 불러오는 중...{{ parseInt((count / total) * 100) }}%
           </span>
-        </div>
+        </div> -->
       </div>
     </div>
     <div>
@@ -31,16 +31,16 @@
         </thead>
         <tbody>
           <tr v-for="item in items" :key="item.id">
-            <td>{{item.netProfit}}</td>
-            <td>{{item.netProfitPercent}}</td>
-            <td>{{item.totalTrades}}</td>
-            <td>{{item.percentProfitable}}</td>
-            <td>{{item.profitFactor}}</td>
-            <td>{{item.maxStrategyDrawnDown}}</td>
-            <td>{{item.maxStrategyDrawDownPercent}}</td>
-            <td>{{item.avgTrade}}</td>
-            <td>{{item.avgTradePercent}}</td>
-            <td>{{item.avgBarsInTrade}}</td>
+            <td>{{ item.all.netProfit }}</td>
+            <td>{{ item.all.netProfitPercent }}</td>
+            <td>{{ item.all.totalTrades }}</td>
+            <td>{{ item.all.percentProfitable }}</td>
+            <td>{{ item.all.profitFactor }}</td>
+            <td>{{ item.maxStrategyDrawnDown }}</td>
+            <td>{{ item.maxStrategyDrawDownPercent }}</td>
+            <td>{{ item.all.avgTrade }}</td>
+            <td>{{ item.all.avgTradePercent }}</td>
+            <td>{{ item.all.avgBarsInTrade }}</td>
           </tr>
         </tbody>
       </table>
@@ -50,93 +50,96 @@
 <script>
 export default {
   computed: {
-    total() {
-      return this.$store.state.total;
-    },
-    count() {
-      return this.$store.state.result;
-    },
-  },
-  watch: {
-    count(val) {
-      if (val === this.total) {
-        setTimeout(() => {
-          this.$router.push("/complete");
-        }, 1500);
-      }
+    // total() {
+    //   return this.$store.state.total;
+    // },
+    // count() {
+    //   return this.$store.state.result;
+    // },
+    items() {
+      return this.$store.state.results;
     },
   },
-  data() {
-    return {
-      items: [
-        {
-          id: 1,
-          netProfit: 44,
-          netProfitPercent: 12,
-          totalTrades: 3,
-          percentProfitable: 25,
-          profitFactor: 42,
-          maxStrategyDrawnDown: 14,
-          maxStrategyDrawDownPercent: 42,
-          avgTrade: 12,
-          avgTradePercent: 6,
-          avgBarsInTrade: 9.32,
-        },
-        {
-          id: 2,
-          netProfit: 1,
-          netProfitPercent: 12,
-          totalTrades: 3,
-          percentProfitable: 25,
-          profitFactor: 42,
-          maxStrategyDrawnDown: 14,
-          maxStrategyDrawDownPercent: 42,
-          avgTrade: 12,
-          avgTradePercent: 6,
-          avgBarsInTrade: 9.32,
-        },
-        {
-          id: 3,
-          netProfit: 24,
-          netProfitPercent: 12,
-          totalTrades: 3,
-          percentProfitable: 25,
-          profitFactor: 42,
-          maxStrategyDrawnDown: 14,
-          maxStrategyDrawDownPercent: 42,
-          avgTrade: 12,
-          avgTradePercent: 6,
-          avgBarsInTrade: 9.32,
-        },
-        {
-          id: 4,
-          netProfit: 44,
-          netProfitPercent: 12,
-          totalTrades: 3,
-          percentProfitable: 25,
-          profitFactor: 42,
-          maxStrategyDrawnDown: 14,
-          maxStrategyDrawDownPercent: 42,
-          avgTrade: 12,
-          avgTradePercent: 6,
-          avgBarsInTrade: 9.32,
-        },
-        {
-          id: 5,
-          netProfit: 24.2,
-          netProfitPercent: 18,
-          totalTrades: 94.7,
-          percentProfitable: 14,
-          profitFactor: 42,
-          maxStrategyDrawnDown: 1.4,
-          maxStrategyDrawDownPercent: 4.2,
-          avgTrade: 12,
-          avgTradePercent: 65,
-          avgBarsInTrade: 9.32,
-        },
-      ],
-    };
-  },
+  // watch: {
+  //   count(val) {
+  //     if (val === this.total) {
+  //       setTimeout(() => {
+  //         this.$router.push("/complete");
+  //       }, 1500);
+  //     }
+  //   },
+  // },
+  // data() {
+  //   return {
+  //     items: [
+  //       {
+  //         id: 1,
+  //         netProfit: 44,
+  //         netProfitPercent: 12,
+  //         totalTrades: 3,
+  //         percentProfitable: 25,
+  //         profitFactor: 42,
+  //         maxStrategyDrawnDown: 14,
+  //         maxStrategyDrawDownPercent: 42,
+  //         avgTrade: 12,
+  //         avgTradePercent: 6,
+  //         avgBarsInTrade: 9.32,
+  //       },
+  //       {
+  //         id: 2,
+  //         netProfit: 1,
+  //         netProfitPercent: 12,
+  //         totalTrades: 3,
+  //         percentProfitable: 25,
+  //         profitFactor: 42,
+  //         maxStrategyDrawnDown: 14,
+  //         maxStrategyDrawDownPercent: 42,
+  //         avgTrade: 12,
+  //         avgTradePercent: 6,
+  //         avgBarsInTrade: 9.32,
+  //       },
+  //       {
+  //         id: 3,
+  //         netProfit: 24,
+  //         netProfitPercent: 12,
+  //         totalTrades: 3,
+  //         percentProfitable: 25,
+  //         profitFactor: 42,
+  //         maxStrategyDrawnDown: 14,
+  //         maxStrategyDrawDownPercent: 42,
+  //         avgTrade: 12,
+  //         avgTradePercent: 6,
+  //         avgBarsInTrade: 9.32,
+  //       },
+  //       {
+  //         id: 4,
+  //         netProfit: 44,
+  //         netProfitPercent: 12,
+  //         totalTrades: 3,
+  //         percentProfitable: 25,
+  //         profitFactor: 42,
+  //         maxStrategyDrawnDown: 14,
+  //         maxStrategyDrawDownPercent: 42,
+  //         avgTrade: 12,
+  //         avgTradePercent: 6,
+  //         avgBarsInTrade: 9.32,
+  //       },
+  //       {
+  //         id: 5,
+  //         netProfit: 24.2,
+  //         netProfitPercent: 18,
+  //         totalTrades: 94.7,
+  //         percentProfitable: 14,
+  //         profitFactor: 42,
+  //         maxStrategyDrawnDown: 1.4,
+  //         maxStrategyDrawDownPercent: 4.2,
+  //         avgTrade: 12,
+  //         avgTradePercent: 65,
+  //         avgBarsInTrade: 9.32,
+  //       },
+  //     ],
+  //   };
+  // },
 };
 </script>
 <style lang="scss" scoped>
