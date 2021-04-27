@@ -651,6 +651,7 @@
   </div>
 </template>
 <script>
+// TODO: 랜덤 range 체크박스 추가
 export default {
   data() {
     return {
