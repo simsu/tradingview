@@ -751,6 +751,18 @@ export default {
     };
   },
   methods: {
+    shuffle(arr) {
+      for (let i = arr.length - 1; i > 0; i--) {
+        const idx = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[idx]] = [arr[idx], arr[i]];
+      }
+      return arr;
+    },
+    range(start, end, unit, shuffle) {
+      const size = parseInt((end - start) / unit) + 1;
+      const result = [...Array(size).keys()].map((x) => x * unit + start);
+      return shuffle ? this.shuffle(result) : result;
+    },
     submit() {
       this.disabled = true;
       this.btnText = "작업 시작중...";

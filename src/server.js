@@ -2,7 +2,7 @@
 import fs from "fs";
 import ws from "ws";
 import path from "path";
-import uuid from "uuid";
+import { v4 as uuid } from "uuid";
 import { execFile } from "child_process";
 
 export class Server {
@@ -71,7 +71,7 @@ export class Server {
   append(p) {
     const item = this.round(p);
     if (item.maxStrategyDrawDownPercent > this.criteria) return;
-    item.id = uuid.v4();
+    item.id = uuid();
     this.results.push(item);
     this.results.sort((a, b) => this.compare(a, b));
     if (this.results.length > this.size) this.results.pop();
