@@ -733,7 +733,11 @@ export default {
     },
     range(start, end, unit, shuffle) {
       const size = parseInt((end - start) / unit) + 1;
-      const result = [...Array(size).keys()].map((x) => x * unit + start);
+      const result = [...Array(size).keys()].map((x) => {
+        const ret = x * unit + start;
+        if (Number.isInteger(ret)) return ret;
+        else return +ret.toFixed(2);
+      });
       return shuffle ? this.shuffle(result) : result;
     },
     submit() {
