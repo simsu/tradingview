@@ -36,7 +36,7 @@
             <td>{{ item.all.totalTrades }}</td>
             <td>{{ item.all.percentProfitable }}</td>
             <td>{{ item.all.profitFactor }}</td>
-            <td>{{ item.maxStrategyDrawnDown }}</td>
+            <td>{{ item.maxStrategyDrawDown }}</td>
             <td>{{ item.maxStrategyDrawDownPercent }}</td>
             <td>{{ item.all.avgTrade }}</td>
             <td>{{ item.all.avgTradePercent }}</td>

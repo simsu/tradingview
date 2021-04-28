@@ -2,6 +2,7 @@
   <v-app>
     <div class="title-e2z0">
       <span @click="openBrowser">Trading View SSF_Strategy</span>
+      <span>{{ $store.state.count }}</span>
       <span v-if="$route.path === '/processing'">
         <v-btn small color="light-blue" class="stop-btn" @click="stop">
           STOP
@@ -54,6 +55,7 @@ export default {
     },
     stop() {
       window.electron.stop();
+      this.$router.push("/complete");
     },
   },
 };

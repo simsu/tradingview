@@ -58,6 +58,21 @@
         ></v-text-field>
       </v-col>
     </v-row>
+    <v-row class="row-1672">
+      <v-col cols="3">우선 순위</v-col>
+      <v-col cols="2">
+        <v-select v-model="select1" :items="items1"></v-select>
+      </v-col>
+      <v-col cols="2">
+        <v-select v-model="select2" :items="items2"></v-select>
+      </v-col>
+      <v-col cols="2">
+        <v-select v-model="select3" :items="items3"></v-select>
+      </v-col>
+      <v-col cols="2">
+        <v-select v-model="select4" :items="items4"></v-select>
+      </v-col>
+    </v-row>
     <v-row>
       <v-col cols="12">
         <v-btn @click="start" color="primary" block>시작하기</v-btn>
@@ -76,6 +91,14 @@ export default {
       size: 30,
       criteria: 30,
       workers: 100,
+      items1: ["최대 손실폭", "순익", "승률", "수익 팩터"],
+      select1: "최대 손실폭",
+      items2: ["최대 손실폭", "순익", "승률", "수익 팩터"],
+      select2: "순익",
+      items3: ["최대 손실폭", "순익", "승률", "수익 팩터"],
+      select3: "승률",
+      items4: ["최대 손실폭", "순익", "승률", "수익 팩터"],
+      select4: "수익 팩터",
     };
   },
   methods: {
@@ -99,10 +122,21 @@ export default {
       window.electron.listen(3333, {
         ...this.$data,
         onCountChange: (count) => this.$store.dispatch("setCount", count),
+        onResultChange: (results) => {
+          this.$store.dispatch("setResults", results);
+          if (window.electron.current() === this.$store.state.total) {
+            window.electron.stop();
+            this.$router.push("/complete");
+          }
+        },
       });
-      if (process.env.NODE_ENV !== "development") {
-        window.electron.execute();
-      }
+      window.electron.setOrder([
+        this.items1.indexOf(this.select1),
+        this.items2.indexOf(this.select2),
+        this.items3.indexOf(this.select3),
+        this.items4.indexOf(this.select4),
+      ]);
+      window.electron.execute();
       this.$router.push("/home");
     },
   },

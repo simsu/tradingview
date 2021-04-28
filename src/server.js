@@ -2,6 +2,7 @@
 import fs from "fs";
 import ws from "ws";
 import path from "path";
+import { Mutex } from "async-mutex";
 import { v4 as uuid } from "uuid";
 import { execFile } from "child_process";
 
@@ -22,11 +23,26 @@ export class Server {
     this.socket = null;
     this.server = null;
     this.process = null;
+    this.mutex = new Mutex();
     this.fn = [
-      (a, b) => a.maxStrategyDrawDownPercent < b.maxStrategyDrawDownPercent,
-      (a, b) => a.all.netProfit > b.all.netProfit,
-      (a, b) => a.all.percentProfitable > b.all.percentProfitable,
-      (a, b) => a.all.profitFactor > b.all.profitFactor,
+      {
+        std: (a, b) =>
+          a.maxStrategyDrawDownPercent < b.maxStrategyDrawDownPercent,
+        inverse: (a, b) =>
+          a.maxStrategyDrawDownPercent > b.maxStrategyDrawDownPercent,
+      },
+      {
+        std: (a, b) => a.all.netProfit > b.all.netProfit,
+        inverse: (a, b) => a.all.netProfit < b.all.netProfit,
+      },
+      {
+        std: (a, b) => a.all.percentProfitable > b.all.percentProfitable,
+        inverse: (a, b) => a.all.percentProfitable < b.all.percentProfitable,
+      },
+      {
+        std: (a, b) => a.all.profitFactor < b.all.profitFactor,
+        inverse: (a, b) => a.all.profitFactor > b.all.profitFactor,
+      },
     ];
     this.orders = [0, 1, 2, 3];
   }
@@ -41,14 +57,22 @@ export class Server {
     this.server = new ws.Server({ port });
     this.server.on("connection", (socket) => {
       this.socket = socket;
-      this.socket.on("message", (data) => {
-        const p = JSON.parse(data);
-        if ("count" in p) {
-          this.count = p.count;
-          if (this.onCountChange) this.onCountChange(this.count);
-        } else {
-          this.append(p);
-        }
+      this.socket.on("message", async (data) => {
+        await this.mutex.runExclusive(() => {
+          if (data === "study_error") {
+            this.current += 1;
+            if (this.onResultChange) this.onResultChange(this.results);
+            return;
+          }
+          const p = JSON.parse(data);
+          if ("count" in p) {
+            this.count = p.count;
+            if (this.onCountChange) this.onCountChange(this.count);
+          } else if (data.includes("netProfit")) {
+            console.log(p.maxStrategyDrawDownPercent);
+            this.append(p);
+          }
+        });
       });
     });
     this.server.on("close", () => {
@@ -58,10 +82,11 @@ export class Server {
   round(item) {
     item.all.netProfit = item.all.netProfit.toFixed(2);
     item.all.netProfitPercent = (item.all.netProfitPercent * 100).toFixed(2);
+    item.all.percentProfitable = (item.all.percentProfitable * 100).toFixed(2);
     item.all.profitFactor = item.all.profitFactor.toFixed(2);
     item.all.avgTrade = item.all.avgTrade.toFixed(2);
     item.all.avgTradePercent = (item.all.avgTradePercent * 100).toFixed(2);
-    item.all.avgBarsInTrade = item.all.avgBarsInTrade.toFixed(2);
+    item.all.avgBarsInTrade = Math.round(item.all.avgBarsInTrade);
     item.maxStrategyDrawDown = item.maxStrategyDrawDown.toFixed(2);
     item.maxStrategyDrawDownPercent = (
       item.maxStrategyDrawDownPercent * 100
@@ -70,19 +95,21 @@ export class Server {
   }
   append(p) {
     const item = this.round(p);
-    if (item.maxStrategyDrawDownPercent > this.criteria) return;
-    item.id = uuid();
-    this.results.push(item);
-    this.results.sort((a, b) => this.compare(a, b));
-    if (this.results.length > this.size) this.results.pop();
-    if (this.onResultChange) this.onResultChange(this.results);
     this.current += 1;
-  }
-  compare(a, b) {
-    for (const index of this.orders) {
-      if (this.fn[index](a, b)) return -1;
+    if (item.maxStrategyDrawDownPercent <= this.criteria) {
+      item.id = uuid();
+      this.results.push(item);
+      this.results.sort((a, b) => {
+        for (const idx of this.orders) {
+          const fn = this.fn[idx];
+          if (fn.std(a, b)) return -1;
+          if (fn.inverse(a, b)) return 1;
+        }
+        return 0;
+      });
+      if (this.results.length > this.size) this.results.pop();
     }
-    return 1;
+    if (this.onResultChange) this.onResultChange(this.results);
   }
   setOnCountChange(fn) {
     this.onCountChange = fn;
@@ -91,6 +118,7 @@ export class Server {
     this.onResultChange = fn;
   }
   execute() {
+    window.alert(__static);
     this.process = execFile(
       path.join(
         __static,
@@ -109,8 +137,9 @@ export class Server {
       this.process.close();
       this.process = null;
     }
+    const now = new Date();
     const writer = fs.createWriteStream(
-      path.join(this.path, Date.now() + "_" + this.criteria + ".csv")
+      path.join(this.path, now.toISOString() + "_" + this.criteria + ".csv")
     );
     writer.write(
       `\ufeff순익($),순익(%),트레이드,승률(%),수익팩터,"최대 손실폭($)","최대 손실폭(%)",` +
@@ -126,7 +155,8 @@ export class Server {
         `${v.all.netProfit},${v.all.netProfitPercent},${v.all.totalTrades},${v.all.percentProfitable},` +
           `${v.all.profitFactor},${v.maxStrategyDrawDown},${v.maxStrategyDrawDownPercent},` +
           `${v.all.avgTrade},${v.all.avgTradePercent},${v.all.avgBarsInTrade},` +
-          v.item.join(",") +
+          `${v.item[0]},${v.item[1]}-${v.item[3]}-${v.item[5]},${v.item[2]}-${v.item[4]}-${v.item[6]},` +
+          v.item.slice(7).join(",") +
           "\n"
       );
     });

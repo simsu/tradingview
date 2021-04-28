@@ -32,4 +32,10 @@ contextBridge.exposeInMainWorld("electron", {
   stop() {
     ctx.server.save();
   },
+  current() {
+    return ctx.server.current;
+  },
+  setOrder(order) {
+    ctx.server.orders = order;
+  },
 });

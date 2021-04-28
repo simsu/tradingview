@@ -27,18 +27,19 @@
           <v-text-field
             label="시작"
             type="number"
-            v-model.number="conversion_start"
+            v-model.number="config[0].s"
           ></v-text-field>
           <v-text-field
             label="종료"
             type="number"
-            v-model.number="conversion_end"
+            v-model.number="config[0].e"
           ></v-text-field>
           <v-text-field
             label="단위"
             type="number"
-            v-model.number="conversion_unit"
+            v-model.number="config[0].u"
           ></v-text-field>
+          <v-checkbox v-model="config[0].r"></v-checkbox>
         </v-col>
       </v-row>
       <v-row>
@@ -49,18 +50,19 @@
           <v-text-field
             label="시작"
             type="number"
-            v-model.number="base_start"
+            v-model.number="config[1].s"
           ></v-text-field>
           <v-text-field
             label="종료"
             type="number"
-            v-model.number="base_end"
+            v-model.number="config[1].e"
           ></v-text-field>
           <v-text-field
             label="단위"
             type="number"
-            v-model.number="base_unit"
+            v-model.number="config[1].u"
           ></v-text-field>
+          <v-checkbox v-model="config[1].r"></v-checkbox>
         </v-col>
       </v-row>
       <v-row>
@@ -71,18 +73,19 @@
           <v-text-field
             label="시작"
             type="number"
-            v-model.number="leadgin_b_start"
+            v-model.number="config[2].s"
           ></v-text-field>
           <v-text-field
             label="종료"
             type="number"
-            v-model.number="leadgin_b_end"
+            v-model.number="config[2].e"
           ></v-text-field>
           <v-text-field
             label="단위"
             type="number"
-            v-model.number="leadgin_b_unit"
+            v-model.number="config[2].u"
           ></v-text-field>
+          <v-checkbox v-model="config[2].r"></v-checkbox>
         </v-col>
       </v-row>
       <v-row>
@@ -93,18 +96,19 @@
           <v-text-field
             label="시작"
             type="number"
-            v-model.number="lagging_offset_start"
+            v-model.number="config[3].s"
           ></v-text-field>
           <v-text-field
             label="종료"
             type="number"
-            v-model.number="lagging_offset_end"
+            v-model.number="config[3].e"
           ></v-text-field>
           <v-text-field
             label="단위"
             type="number"
-            v-model.number="lagging_offset_unit"
+            v-model.number="config[3].u"
           ></v-text-field>
+          <v-checkbox v-model="config[3].r"></v-checkbox>
         </v-col>
       </v-row>
       <v-row>
@@ -115,18 +119,19 @@
           <v-text-field
             label="시작"
             type="number"
-            v-model.number="leadgin_offset_start"
+            v-model.number="config[4].s"
           ></v-text-field>
           <v-text-field
             label="종료"
             type="number"
-            v-model.number="leadgin_offset_end"
+            v-model.number="config[4].e"
           ></v-text-field>
           <v-text-field
             label="단위"
             type="number"
-            v-model.number="leadgin_offset_unit"
+            v-model.number="config[4].u"
           ></v-text-field>
+          <v-checkbox v-model="config[4].r"></v-checkbox>
         </v-col>
       </v-row>
       <v-row>
@@ -137,18 +142,19 @@
           <v-text-field
             label="시작"
             type="number"
-            v-model.number="base_bar_start"
+            v-model.number="config[5].s"
           ></v-text-field>
           <v-text-field
             label="종료"
             type="number"
-            v-model.number="base_bar_end"
+            v-model.number="config[5].e"
           ></v-text-field>
           <v-text-field
             label="단위"
             type="number"
-            v-model.number="base_bar_unit"
+            v-model.number="config[5].u"
           ></v-text-field>
+          <v-checkbox v-model="config[5].r"></v-checkbox>
         </v-col>
       </v-row>
       <v-row>
@@ -159,18 +165,19 @@
           <v-text-field
             label="시작"
             type="number"
-            v-model.number="longfactor_start"
+            v-model.number="config[6].s"
           ></v-text-field>
           <v-text-field
             label="종료"
             type="number"
-            v-model.number="longfactor_end"
+            v-model.number="config[6].e"
           ></v-text-field>
           <v-text-field
             label="단위"
             type="number"
-            v-model.number="longfactor_unit"
+            v-model.number="config[6].u"
           ></v-text-field>
+          <v-checkbox v-model="config[6].r"></v-checkbox>
         </v-col>
       </v-row>
       <v-row>
@@ -181,18 +188,19 @@
           <v-text-field
             label="시작"
             type="number"
-            v-model.number="shortfactor_start"
+            v-model.number="config[7].s"
           ></v-text-field>
           <v-text-field
             label="종료"
             type="number"
-            v-model.number="shortfactor_end"
+            v-model.number="config[7].e"
           ></v-text-field>
           <v-text-field
             label="단위"
             type="number"
-            v-model.number="shortfactor_unit"
+            v-model.number="config[7].u"
           ></v-text-field>
+          <v-checkbox v-model="config[7].r"></v-checkbox>
         </v-col>
       </v-row>
       <v-row>
@@ -203,18 +211,19 @@
           <v-text-field
             label="시작"
             type="number"
-            v-model.number="base_bar2_start"
+            v-model.number="config[8].s"
           ></v-text-field>
           <v-text-field
             label="종료"
             type="number"
-            v-model.number="base_bar2_end"
+            v-model.number="config[8].e"
           ></v-text-field>
           <v-text-field
             label="단위"
             type="number"
-            v-model.number="base_bar2_unit"
+            v-model.number="config[8].u"
           ></v-text-field>
+          <v-checkbox v-model="config[8].r"></v-checkbox>
         </v-col>
       </v-row>
       <v-row>
@@ -225,18 +234,19 @@
           <v-text-field
             label="시작"
             type="number"
-            v-model.number="longfactor2_start"
+            v-model.number="config[9].s"
           ></v-text-field>
           <v-text-field
             label="종료"
             type="number"
-            v-model.number="longfactor2_end"
+            v-model.number="config[9].e"
           ></v-text-field>
           <v-text-field
             label="단위"
             type="number"
-            v-model.number="longfactor2_unit"
+            v-model.number="config[9].u"
           ></v-text-field>
+          <v-checkbox v-model="config[9].r"></v-checkbox>
         </v-col>
       </v-row>
       <v-row>
@@ -247,18 +257,19 @@
           <v-text-field
             label="시작"
             type="number"
-            v-model.number="shortfactor2_start"
+            v-model.number="config[10].s"
           ></v-text-field>
           <v-text-field
             label="종료"
             type="number"
-            v-model.number="shortfactor2_end"
+            v-model.number="config[10].e"
           ></v-text-field>
           <v-text-field
             label="단위"
             type="number"
-            v-model.number="shortfactor2_unit"
+            v-model.number="config[10].u"
           ></v-text-field>
+          <v-checkbox v-model="config[10].r"></v-checkbox>
         </v-col>
       </v-row>
       <v-row>
@@ -269,18 +280,19 @@
           <v-text-field
             label="시작"
             type="number"
-            v-model.number="base_bar3_start"
+            v-model.number="config[11].s"
           ></v-text-field>
           <v-text-field
             label="종료"
             type="number"
-            v-model.number="base_bar3_end"
+            v-model.number="config[11].e"
           ></v-text-field>
           <v-text-field
             label="단위"
             type="number"
-            v-model.number="base_bar3_unit"
+            v-model.number="config[11].u"
           ></v-text-field>
+          <v-checkbox v-model="config[11].r"></v-checkbox>
         </v-col>
       </v-row>
       <v-row>
@@ -291,18 +303,19 @@
           <v-text-field
             label="시작"
             type="number"
-            v-model.number="longfactor3_start"
+            v-model.number="config[12].s"
           ></v-text-field>
           <v-text-field
             label="종료"
             type="number"
-            v-model.number="longfactor3_end"
+            v-model.number="config[12].e"
           ></v-text-field>
           <v-text-field
             label="단위"
             type="number"
-            v-model.number="longfactor3_unit"
+            v-model.number="config[12].u"
           ></v-text-field>
+          <v-checkbox v-model="config[12].r"></v-checkbox>
         </v-col>
       </v-row>
       <v-row>
@@ -313,18 +326,19 @@
           <v-text-field
             label="시작"
             type="number"
-            v-model.number="shortfactor3_start"
+            v-model.number="config[13].s"
           ></v-text-field>
           <v-text-field
             label="종료"
             type="number"
-            v-model.number="shortfactor3_end"
+            v-model.number="config[13].e"
           ></v-text-field>
           <v-text-field
             label="단위"
             type="number"
-            v-model.number="shortfactor3_unit"
+            v-model.number="config[13].u"
           ></v-text-field>
+          <v-checkbox v-model="config[13].r"></v-checkbox>
         </v-col>
       </v-row>
       <v-row>
@@ -335,18 +349,19 @@
           <v-text-field
             label="시작"
             type="number"
-            v-model.number="base_bar4_start"
+            v-model.number="config[14].s"
           ></v-text-field>
           <v-text-field
             label="종료"
             type="number"
-            v-model.number="base_bar4_end"
+            v-model.number="config[14].e"
           ></v-text-field>
           <v-text-field
             label="단위"
             type="number"
-            v-model.number="base_bar4_unit"
+            v-model.number="config[14].u"
           ></v-text-field>
+          <v-checkbox v-model="config[14].r"></v-checkbox>
         </v-col>
       </v-row>
       <v-row>
@@ -357,18 +372,19 @@
           <v-text-field
             label="시작"
             type="number"
-            v-model.number="longfactor4_start"
+            v-model.number="config[15].s"
           ></v-text-field>
           <v-text-field
             label="종료"
             type="number"
-            v-model.number="longfactor4_end"
+            v-model.number="config[15].e"
           ></v-text-field>
           <v-text-field
             label="단위"
             type="number"
-            v-model.number="longfactor4_unit"
+            v-model.number="config[15].u"
           ></v-text-field>
+          <v-checkbox v-model="config[15].r"></v-checkbox>
         </v-col>
       </v-row>
       <v-row>
@@ -379,18 +395,19 @@
           <v-text-field
             label="시작"
             type="number"
-            v-model.number="shortfactor4_start"
+            v-model.number="config[16].s"
           ></v-text-field>
           <v-text-field
             label="종료"
             type="number"
-            v-model.number="shortfactor4_end"
+            v-model.number="config[16].e"
           ></v-text-field>
           <v-text-field
             label="단위"
             type="number"
-            v-model.number="shortfactor4_unit"
+            v-model.number="config[16].u"
           ></v-text-field>
+          <v-checkbox v-model="config[16].r"></v-checkbox>
         </v-col>
       </v-row>
       <v-row>
@@ -401,18 +418,19 @@
           <v-text-field
             label="시작"
             type="number"
-            v-model.number="base_bar5_start"
+            v-model.number="config[17].s"
           ></v-text-field>
           <v-text-field
             label="종료"
             type="number"
-            v-model.number="base_bar5_end"
+            v-model.number="config[17].e"
           ></v-text-field>
           <v-text-field
             label="단위"
             type="number"
-            v-model.number="base_bar5_unit"
+            v-model.number="config[17].u"
           ></v-text-field>
+          <v-checkbox v-model="config[17].r"></v-checkbox>
         </v-col>
       </v-row>
       <v-row>
@@ -423,18 +441,19 @@
           <v-text-field
             label="시작"
             type="number"
-            v-model.number="longfactor5_start"
+            v-model.number="config[18].s"
           ></v-text-field>
           <v-text-field
             label="종료"
             type="number"
-            v-model.number="longfactor5_end"
+            v-model.number="config[18].e"
           ></v-text-field>
           <v-text-field
             label="단위"
             type="number"
-            v-model.number="longfactor5_unit"
+            v-model.number="config[18].u"
           ></v-text-field>
+          <v-checkbox v-model="config[18].r"></v-checkbox>
         </v-col>
       </v-row>
       <v-row>
@@ -445,18 +464,19 @@
           <v-text-field
             label="시작"
             type="number"
-            v-model.number="shortfactor5_start"
+            v-model.number="config[19].s"
           ></v-text-field>
           <v-text-field
             label="종료"
             type="number"
-            v-model.number="shortfactor5_end"
+            v-model.number="config[19].e"
           ></v-text-field>
           <v-text-field
             label="단위"
             type="number"
-            v-model.number="shortfactor5_unit"
+            v-model.number="config[19].u"
           ></v-text-field>
+          <v-checkbox v-model="config[19].r"></v-checkbox>
         </v-col>
       </v-row>
       <v-row>
@@ -467,18 +487,19 @@
           <v-text-field
             label="시작"
             type="number"
-            v-model.number="rsi_period_start"
+            v-model.number="config[20].s"
           ></v-text-field>
           <v-text-field
             label="종료"
             type="number"
-            v-model.number="rsi_period_end"
+            v-model.number="config[20].e"
           ></v-text-field>
           <v-text-field
             label="단위"
             type="number"
-            v-model.number="rsi_period_unit"
+            v-model.number="config[20].u"
           ></v-text-field>
+          <v-checkbox v-model="config[20].r"></v-checkbox>
         </v-col>
       </v-row>
       <v-row>
@@ -489,18 +510,19 @@
           <v-text-field
             label="시작"
             type="number"
-            v-model.number="pivot_right_start"
+            v-model.number="config[21].s"
           ></v-text-field>
           <v-text-field
             label="종료"
             type="number"
-            v-model.number="pivot_right_end"
+            v-model.number="config[21].e"
           ></v-text-field>
           <v-text-field
             label="단위"
             type="number"
-            v-model.number="pivot_right_unit"
+            v-model.number="config[21].u"
           ></v-text-field>
+          <v-checkbox v-model="config[21].r"></v-checkbox>
         </v-col>
       </v-row>
       <v-row>
@@ -511,18 +533,19 @@
           <v-text-field
             label="시작"
             type="number"
-            v-model.number="pivot_left_start"
+            v-model.number="config[22].s"
           ></v-text-field>
           <v-text-field
             label="종료"
             type="number"
-            v-model.number="pivot_left_end"
+            v-model.number="config[22].e"
           ></v-text-field>
           <v-text-field
             label="단위"
             type="number"
-            v-model.number="pivot_left_unit"
+            v-model.number="config[22].u"
           ></v-text-field>
+          <v-checkbox v-model="config[22].r"></v-checkbox>
         </v-col>
       </v-row>
       <v-row>
@@ -533,18 +556,19 @@
           <v-text-field
             label="시작"
             type="number"
-            v-model.number="max_range_start"
+            v-model.number="config[23].s"
           ></v-text-field>
           <v-text-field
             label="종료"
             type="number"
-            v-model.number="max_range_end"
+            v-model.number="config[23].e"
           ></v-text-field>
           <v-text-field
             label="단위"
             type="number"
-            v-model.number="max_range_unit"
+            v-model.number="config[23].u"
           ></v-text-field>
+          <v-checkbox v-model="config[23].r"></v-checkbox>
         </v-col>
       </v-row>
       <v-row>
@@ -555,18 +579,19 @@
           <v-text-field
             label="시작"
             type="number"
-            v-model.number="min_range_start"
+            v-model.number="config[24].s"
           ></v-text-field>
           <v-text-field
             label="종료"
             type="number"
-            v-model.number="min_range_end"
+            v-model.number="config[24].e"
           ></v-text-field>
           <v-text-field
             label="단위"
             type="number"
-            v-model.number="min_range_unit"
+            v-model.number="config[24].u"
           ></v-text-field>
+          <v-checkbox v-model="config[24].r"></v-checkbox>
         </v-col>
       </v-row>
       <v-row>
@@ -577,18 +602,19 @@
           <v-text-field
             label="시작"
             type="number"
-            v-model.number="left_bars_start"
+            v-model.number="config[25].s"
           ></v-text-field>
           <v-text-field
             label="종료"
             type="number"
-            v-model.number="left_bars_end"
+            v-model.number="config[25].e"
           ></v-text-field>
           <v-text-field
             label="단위"
             type="number"
-            v-model.number="left_bars_unit"
+            v-model.number="config[25].u"
           ></v-text-field>
+          <v-checkbox v-model="config[25].r"></v-checkbox>
         </v-col>
       </v-row>
       <v-row>
@@ -599,18 +625,19 @@
           <v-text-field
             label="시작"
             type="number"
-            v-model.number="right_bars_start"
+            v-model.number="config[26].s"
           ></v-text-field>
           <v-text-field
             label="종료"
             type="number"
-            v-model.number="right_bars_end"
+            v-model.number="config[26].e"
           ></v-text-field>
           <v-text-field
             label="단위"
             type="number"
-            v-model.number="right_bars_unit"
+            v-model.number="config[26].u"
           ></v-text-field>
+          <v-checkbox v-model="config[26].r"></v-checkbox>
         </v-col>
       </v-row>
       <v-row>
@@ -621,18 +648,19 @@
           <v-text-field
             label="시작"
             type="number"
-            v-model.number="divergence_start"
+            v-model.number="config[27].s"
           ></v-text-field>
           <v-text-field
             label="종료"
             type="number"
-            v-model.number="divergence_end"
+            v-model.number="config[27].e"
           ></v-text-field>
           <v-text-field
             label="단위"
             type="number"
-            v-model.number="divergence_unit"
+            v-model.number="config[27].u"
           ></v-text-field>
+          <v-checkbox v-model="config[27].r"></v-checkbox>
         </v-col>
       </v-row>
       <div :class="active">
@@ -651,7 +679,6 @@
   </div>
 </template>
 <script>
-// TODO: 랜덤 range 체크박스 추가
 export default {
   data() {
     return {
@@ -660,90 +687,36 @@ export default {
       start: "2019-01-01",
       end: "2020-12-31",
       leverage: 2,
-      conversion_start: 8,
-      conversion_end: 8,
-      conversion_unit: 1,
-      base_start: 4,
-      base_end: 4,
-      base_unit: 1,
-      leadgin_b_start: 14,
-      leadgin_b_end: 14,
-      leadgin_b_unit: 1,
-      lagging_offset_start: 9,
-      lagging_offset_end: 9,
-      lagging_offset_unit: 1,
-      leadgin_offset_start: 28,
-      leadgin_offset_end: 28,
-      leadgin_offset_unit: 1,
-      base_bar_start: 3,
-      base_bar_end: 3,
-      base_bar_unit: 1,
-      longfactor_start: 1.95,
-      longfactor_end: 1.95,
-      longfactor_unit: 1,
-      shortfactor_start: 1.95,
-      shortfactor_end: 1.95,
-      shortfactor_unit: 1,
-      base_bar2_start: 10,
-      base_bar2_end: 10,
-      base_bar2_unit: 1,
-      longfactor2_start: 1.65,
-      longfactor2_end: 1.65,
-      longfactor2_unit: 1,
-      shortfactor2_start: 1.75,
-      shortfactor2_end: 1.75,
-      shortfactor2_unit: 1,
-      base_bar3_start: 10,
-      base_bar3_end: 10,
-      base_bar3_unit: 1,
-      longfactor3_start: 2,
-      longfactor3_end: 2,
-      longfactor3_unit: 1,
-      shortfactor3_start: 2,
-      shortfactor3_end: 2,
-      shortfactor3_unit: 1,
-      base_bar4_start: 15,
-      base_bar4_end: 15,
-      base_bar4_unit: 1,
-      longfactor4_start: 2,
-      longfactor4_end: 2,
-      longfactor4_unit: 1,
-      shortfactor4_start: 2.2,
-      shortfactor4_end: 2.2,
-      shortfactor4_unit: 1,
-      base_bar5_start: 26,
-      base_bar5_end: 26,
-      base_bar5_unit: 1,
-      longfactor5_start: 2,
-      longfactor5_end: 2,
-      longfactor5_unit: 1,
-      shortfactor5_start: 2,
-      shortfactor5_end: 2,
-      shortfactor5_unit: 1,
-      rsi_period_start: 3,
-      rsi_period_end: 3,
-      rsi_period_unit: 1,
-      pivot_right_start: 4,
-      pivot_right_end: 4,
-      pivot_right_unit: 1,
-      pivot_left_start: 3,
-      pivot_left_end: 3,
-      pivot_left_unit: 1,
-      max_range_start: 60,
-      max_range_end: 60,
-      max_range_unit: 1,
-      min_range_start: 3,
-      min_range_end: 3,
-      min_range_unit: 1,
-      left_bars_start: 7,
-      left_bars_end: 7,
-      left_bars_unit: 1,
-      right_bars_start: 6,
-      right_bars_end: 6,
-      right_bars_unit: 1,
-      divergence_start: 4,
-      divergence_end: 4,
-      divergence_unit: 1,
+      config: [
+        { s: 8, e: 8, u: 1, r: false },
+        { s: 4, e: 4, u: 1, r: false },
+        { s: 14, e: 14, u: 1, r: false },
+        { s: 9, e: 9, u: 1, r: false },
+        { s: 28, e: 28, u: 1, r: false },
+        { s: 3, e: 3, u: 1, r: false },
+        { s: 1.95, e: 1.95, u: 1, r: false },
+        { s: 1.95, e: 1.95, u: 1, r: false },
+        { s: 10, e: 10, u: 1, r: false },
+        { s: 1.65, e: 1.65, u: 1, r: false },
+        { s: 1.75, e: 1.75, u: 1, r: false },
+        { s: 10, e: 10, u: 1, r: false },
+        { s: 2, e: 2, u: 1, r: false },
+        { s: 2, e: 2, u: 1, r: false },
+        { s: 15, e: 15, u: 1, r: false },
+        { s: 2, e: 2, u: 1, r: false },
+        { s: 2.2, e: 2.2, u: 1, r: false },
+        { s: 26, e: 26, u: 1, r: false },
+        { s: 2, e: 2, u: 1, r: false },
+        { s: 2, e: 2, u: 1, r: false },
+        { s: 3, e: 3, u: 1, r: false },
+        { s: 4, e: 4, u: 1, r: false },
+        { s: 3, e: 3, u: 1, r: false },
+        { s: 60, e: 60, u: 1, r: false },
+        { s: 3, e: 3, u: 1, r: false },
+        { s: 7, e: 7, u: 1, r: false },
+        { s: 6, e: 6, u: 1, r: false },
+        { s: 4, e: 4, u: 1, r: false },
+      ],
       active: {
         bott: false,
         "button-32dd": true,
@@ -766,6 +739,124 @@ export default {
     submit() {
       this.disabled = true;
       this.btnText = "작업 시작중...";
+      const set = this.config.map((item) =>
+        this.range(item.s, item.e, item.u, item.r)
+      );
+      const start = this.start.split("-");
+      const end = this.end.split("-");
+      const staticSet = [
+        this.leverage,
+        +start[0],
+        +end[0],
+        +start[1],
+        +end[1],
+        +start[2],
+        +end[2],
+      ];
+      this.$store.dispatch(
+        "setTotal",
+        set.reduce((p, c) => p * c.length, 1)
+      );
+      set[0].forEach((s0) => {
+        set[1].forEach((s1) => {
+          set[2].forEach((s2) => {
+            set[3].forEach((s3) => {
+              set[4].forEach((s4) => {
+                set[5].forEach((s5) => {
+                  set[6].forEach((s6) => {
+                    set[7].forEach((s7) => {
+                      set[8].forEach((s8) => {
+                        set[9].forEach((s9) => {
+                          set[10].forEach((s10) => {
+                            set[11].forEach((s11) => {
+                              set[12].forEach((s12) => {
+                                set[13].forEach((s13) => {
+                                  set[14].forEach((s14) => {
+                                    set[15].forEach((s15) => {
+                                      set[16].forEach((s16) => {
+                                        set[17].forEach((s17) => {
+                                          set[18].forEach((s18) => {
+                                            set[19].forEach((s19) => {
+                                              set[20].forEach((s20) => {
+                                                set[21].forEach((s21) => {
+                                                  set[22].forEach((s22) => {
+                                                    set[23].forEach((s23) => {
+                                                      set[24].forEach((s24) => {
+                                                        set[25].forEach(
+                                                          (s25) => {
+                                                            set[26].forEach(
+                                                              (s26) => {
+                                                                set[27].forEach(
+                                                                  (s27) => {
+                                                                    window.electron.send(
+                                                                      JSON.stringify(
+                                                                        [
+                                                                          ...staticSet,
+                                                                          s0,
+                                                                          s1,
+                                                                          s2,
+                                                                          s3,
+                                                                          s4,
+                                                                          s5,
+                                                                          s6,
+                                                                          s7,
+                                                                          s8,
+                                                                          s9,
+                                                                          s10,
+                                                                          s11,
+                                                                          s12,
+                                                                          s13,
+                                                                          s14,
+                                                                          s15,
+                                                                          s16,
+                                                                          s17,
+                                                                          s18,
+                                                                          s19,
+                                                                          s20,
+                                                                          s21,
+                                                                          s22,
+                                                                          s23,
+                                                                          s24,
+                                                                          s25,
+                                                                          s26,
+                                                                          s27,
+                                                                        ]
+                                                                      )
+                                                                    );
+                                                                  }
+                                                                );
+                                                              }
+                                                            );
+                                                          }
+                                                        );
+                                                      });
+                                                    });
+                                                  });
+                                                });
+                                              });
+                                            });
+                                          });
+                                        });
+                                      });
+                                    });
+                                  });
+                                });
+                              });
+                            });
+                          });
+                        });
+                      });
+                    });
+                  });
+                });
+              });
+            });
+          });
+        });
+      });
+      this.disabled = false;
+      this.btnText = "확인";
+      this.$router.push("/processing");
     },
     onScroll() {
       if (

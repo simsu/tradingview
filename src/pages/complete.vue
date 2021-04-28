@@ -14,6 +14,7 @@
 export default {
   methods: {
     go_home() {
+      window.electron.execute();
       this.$router.push("/home");
     },
   },
