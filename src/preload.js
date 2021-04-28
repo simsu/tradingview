@@ -1,8 +1,8 @@
-/* global __static */
-import path from "path";
 import { contextBridge, ipcRenderer } from "electron";
-import { exec, execFile } from "child_process";
+import { exec } from "child_process";
+import { Server } from "./server";
 
+const ctx = { server: null };
 contextBridge.exposeInMainWorld("electron", {
   openURL(url) {
     if (process.platform === "win32") exec("explorer " + url);
@@ -19,13 +19,23 @@ contextBridge.exposeInMainWorld("electron", {
   exit() {
     ipcRenderer.send("exit");
   },
+  listen(port, opts) {
+    ctx.server = new Server(opts);
+    ctx.server.listen(port);
+  },
+  send(data) {
+    ctx.server.send(data);
+  },
+  execute() {
+    ctx.server.execute();
+  },
+  stop() {
+    ctx.server.save();
+  },
+  current() {
+    return ctx.server.current;
+  },
+  setOrder(order) {
+    ctx.server.orders = order;
+  },
 });
-
-if (process.env.NODE_ENV === "production")
-  execFile(
-    path.join(
-      __static,
-      process.platform === "win32" ? "crawler.exe" : "crawler"
-    ),
-    () => console.log("Started")
-  );

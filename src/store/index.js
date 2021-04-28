@@ -6,10 +6,9 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     count: 0,
+    current: 0,
+    results: [],
     total: 0,
-    workers: 0,
-    result: 0,
-    saved: null,
     snackbar: false,
     text: "",
   },
@@ -17,17 +16,14 @@ export default new Vuex.Store({
     setCount(state, count) {
       state.count = count;
     },
+    setCurrent(state, current) {
+      state.current = current;
+    },
+    setResults(state, results) {
+      state.results = results;
+    },
     setTotal(state, total) {
       state.total = total;
-    },
-    setWorkers(state, count) {
-      state.workers = count;
-    },
-    setResult(state, result) {
-      state.result = result;
-    },
-    setSaved(state, saved) {
-      state.saved = saved;
     },
     setSnackbar(state, snackbar) {
       state.snackbar = snackbar;
@@ -40,17 +36,14 @@ export default new Vuex.Store({
     setCount({ commit }, count) {
       commit("setCount", count);
     },
+    setCurrent({ commit }, current) {
+      commit("setCurrent", current);
+    },
+    setResults({ commit }, results) {
+      commit("setResults", results);
+    },
     setTotal({ commit }, total) {
       commit("setTotal", total);
-    },
-    setWorkers({ commit }, count) {
-      commit("setWorkers", count);
-    },
-    setResult({ commit }, result) {
-      commit("setResult", result);
-    },
-    setSaved({ commit }, saved) {
-      commit("setSaved", saved);
     },
     setSnackbar({ commit }, snackbar) {
       commit("setSnackbar", snackbar);

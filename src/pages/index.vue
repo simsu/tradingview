@@ -1,6 +1,18 @@
 <template>
   <v-container>
     <v-row class="row-1672">
+      <v-col cols="3">차트 ID</v-col>
+      <v-col cols="8">
+        <v-text-field v-model="id" hide-details outlined></v-text-field>
+      </v-col>
+    </v-row>
+    <v-row class="row-1672">
+      <v-col cols="3">인증 토큰</v-col>
+      <v-col cols="8">
+        <v-text-field v-model="token" hide-details outlined></v-text-field>
+      </v-col>
+    </v-row>
+    <v-row class="row-1672">
       <v-col cols="3">저장 위치</v-col>
       <v-col cols="8">
         <v-text-field
@@ -46,6 +58,21 @@
         ></v-text-field>
       </v-col>
     </v-row>
+    <v-row class="row-1672">
+      <v-col cols="3">우선 순위</v-col>
+      <v-col cols="2">
+        <v-select v-model="select1" :items="items1"></v-select>
+      </v-col>
+      <v-col cols="2">
+        <v-select v-model="select2" :items="items2"></v-select>
+      </v-col>
+      <v-col cols="2">
+        <v-select v-model="select3" :items="items3"></v-select>
+      </v-col>
+      <v-col cols="2">
+        <v-select v-model="select4" :items="items4"></v-select>
+      </v-col>
+    </v-row>
     <v-row>
       <v-col cols="12">
         <v-btn @click="start" color="primary" block>시작하기</v-btn>
@@ -54,13 +81,24 @@
   </v-container>
 </template>
 <script>
+// TODO: 저장 우선순위 추가
 export default {
   data() {
     return {
+      id: "",
+      token: "",
       path: "",
       size: 30,
       criteria: 30,
       workers: 100,
+      items1: ["최대 손실폭", "순익", "승률", "수익 팩터"],
+      select1: "최대 손실폭",
+      items2: ["최대 손실폭", "순익", "승률", "수익 팩터"],
+      select2: "순익",
+      items3: ["최대 손실폭", "순익", "승률", "수익 팩터"],
+      select3: "승률",
+      items4: ["최대 손실폭", "순익", "승률", "수익 팩터"],
+      select4: "수익 팩터",
     };
   },
   methods: {
@@ -69,42 +107,37 @@ export default {
       this.path = path[0];
     },
     start() {
-      if (this.path.length === 0) {
+      if (!this.id) {
+        this.$store.dispatch("setMessage", "올바른 차트ID를 입력하세요");
+        return;
+      }
+      if (!this.token) {
+        this.$store.dispatch("setMessage", "올바른 계정 토큰을 입력하세요");
+        return;
+      }
+      if (!this.path) {
         this.$store.dispatch("setMessage", "올바른 저장경로를 선택하세요");
         return;
       }
-      this.$store.dispatch("setWorkers", this.workers);
-      const ws = new WebSocket("ws://localhost:1323");
-      ws.onopen = () => {
-        const message = JSON.stringify(["start", JSON.stringify(this.$data)]);
-        ws.send(message);
-        console.log("OPENED");
-      };
-      ws.onclose = () => {
-        console.log("CLOSED");
-      };
-      ws.onmessage = (event) => {
-        const data = JSON.parse(event.data);
-        if (data[0] === "count") {
-          this.$store.dispatch("setCount", data[1]);
-        } else if (data[0] === "result") {
-          this.$store.dispatch("setResult", data[1]);
-        } else if (data[0] === "save" && data[1] === "success") {
-          this.$store.dispatch("setSaved", true);
-        } else if (data[0] === "save") {
-          this.$store.dispatch("setSaved", false);
-        } else if (data[0] === "total") {
-          this.$store.dispatch("setTotal", data[1]);
-          this.$router.push("/processing");
-        } else if (data[0] === "error") {
-          window.alert(
-            "잘못된 값으로 인해 에러가 발생했습니다. 프로그램을 종료합니다."
-          );
-          setTimeout(() => window.electron.exit(), 3000);
-        }
-      };
-      window.socket = ws;
-      this.$router.push("/loading");
+      window.electron.listen(3333, {
+        ...this.$data,
+        onCountChange: (count) => this.$store.dispatch("setCount", count),
+        onResultChange: (results) => {
+          this.$store.dispatch("setResults", results);
+          if (window.electron.current() === this.$store.state.total) {
+            window.electron.stop();
+            this.$router.push("/complete");
+          }
+        },
+      });
+      window.electron.setOrder([
+        this.items1.indexOf(this.select1),
+        this.items2.indexOf(this.select2),
+        this.items3.indexOf(this.select3),
+        this.items4.indexOf(this.select4),
+      ]);
+      window.electron.execute();
+      this.$router.push("/home");
     },
   },
 };

@@ -4,9 +4,7 @@
       <div class="pause-g9h3">
         <div class="mb-5">완료되었습니다.</div>
         <div>
-          <v-btn text color="light-blue" @click="go_home">
-            돌아가기
-          </v-btn>
+          <v-btn text color="light-blue" @click="go_home"> 돌아가기 </v-btn>
         </div>
       </div>
     </div>
@@ -16,6 +14,7 @@
 export default {
   methods: {
     go_home() {
+      window.electron.execute();
       this.$router.push("/home");
     },
   },
