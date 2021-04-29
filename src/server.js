@@ -40,8 +40,8 @@ export class Server {
         inverse: (a, b) => a.all.percentProfitable < b.all.percentProfitable,
       },
       {
-        std: (a, b) => a.all.profitFactor < b.all.profitFactor,
-        inverse: (a, b) => a.all.profitFactor > b.all.profitFactor,
+        std: (a, b) => a.all.profitFactor > b.all.profitFactor,
+        inverse: (a, b) => a.all.profitFactor < b.all.profitFactor,
       },
     ];
     this.orders = [0, 1, 2, 3];
@@ -59,7 +59,7 @@ export class Server {
       this.socket = socket;
       this.socket.on("message", async (data) => {
         await this.mutex.runExclusive(() => {
-          if (data === "study_error") {
+          if (data.includes("study_error")) {
             this.current += 1;
             if (this.onResultChange) this.onResultChange(this.results);
             return;
@@ -118,7 +118,6 @@ export class Server {
     this.onResultChange = fn;
   }
   execute() {
-    window.alert(__static);
     this.process = execFile(
       path.join(
         __static,
@@ -134,12 +133,12 @@ export class Server {
   }
   save() {
     if (this.process != null) {
-      this.process.close();
+      this.process.kill();
       this.process = null;
     }
     const now = new Date();
     const writer = fs.createWriteStream(
-      path.join(this.path, now.toISOString() + "_" + this.criteria + ".csv")
+      path.join(this.path, now.toISOString().replace(/:/g, "_") + "_" + this.criteria + ".csv")
     );
     writer.write(
       `\ufeff순익($),순익(%),트레이드,승률(%),수익팩터,"최대 손실폭($)","최대 손실폭(%)",` +
