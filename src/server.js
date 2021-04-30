@@ -80,15 +80,15 @@ export class Server {
     });
   }
   round(item) {
-    item.all.netProfit = item.all.netProfit.toFixed(2);
-    item.all.netProfitPercent = (item.all.netProfitPercent * 100).toFixed(2);
-    item.all.percentProfitable = (item.all.percentProfitable * 100).toFixed(2);
-    item.all.profitFactor = item.all.profitFactor.toFixed(2);
-    item.all.avgTrade = item.all.avgTrade.toFixed(2);
-    item.all.avgTradePercent = (item.all.avgTradePercent * 100).toFixed(2);
+    item.all.netProfit = +item.all.netProfit.toFixed(2);
+    item.all.netProfitPercent = +(item.all.netProfitPercent * 100).toFixed(2);
+    item.all.percentProfitable = +(item.all.percentProfitable * 100).toFixed(2);
+    item.all.profitFactor = +item.all.profitFactor.toFixed(2);
+    item.all.avgTrade = +item.all.avgTrade.toFixed(2);
+    item.all.avgTradePercent = +(item.all.avgTradePercent * 100).toFixed(2);
     item.all.avgBarsInTrade = Math.round(item.all.avgBarsInTrade);
-    item.maxStrategyDrawDown = item.maxStrategyDrawDown.toFixed(2);
-    item.maxStrategyDrawDownPercent = (
+    item.maxStrategyDrawDown = +item.maxStrategyDrawDown.toFixed(2);
+    item.maxStrategyDrawDownPercent = +(
       item.maxStrategyDrawDownPercent * 100
     ).toFixed(2);
     return item;
@@ -119,13 +119,16 @@ export class Server {
     this.onResultChange = fn;
   }
   execute() {
-    this.process = execFile(
-      path.join(
-        __static,
-        process.platform === "win32" ? "crawler.exe" : "crawler"
-      ),
-      [this.id, this.token, this.workers]
-    );
+    const test = false;
+    if (test) {
+      this.process = execFile(
+        path.join(
+          __static,
+          process.platform === "win32" ? "crawler.exe" : "crawler"
+        ),
+        [this.id, this.token, this.workers]
+      );
+    }
   }
   send(data) {
     if (this.socket) {
@@ -139,7 +142,10 @@ export class Server {
     }
     const now = new Date();
     const writer = fs.createWriteStream(
-      path.join(this.path, now.toISOString().replace(/:/g, "_") + "_" + this.criteria + ".csv")
+      path.join(
+        this.path,
+        now.toISOString().replace(/:/g, "_") + "_" + this.criteria + ".csv"
+      )
     );
     writer.write(
       `\ufeff순익($),순익(%),트레이드,승률(%),수익팩터,"최대 손실폭($)","최대 손실폭(%)",` +
