@@ -96,6 +96,7 @@ export class Server {
   append(p) {
     const item = this.round(p);
     this.current += 1;
+    console.log(item);
     if (item.maxStrategyDrawDownPercent <= this.criteria) {
       item.id = uuid();
       this.results.push(item);
@@ -118,13 +119,16 @@ export class Server {
     this.onResultChange = fn;
   }
   execute() {
-    this.process = execFile(
-      path.join(
-        __static,
-        process.platform === "win32" ? "crawler.exe" : "crawler"
-      ),
-      [this.id, this.token, this.workers]
-    );
+    let f = false;
+    if (f) {
+      this.process = execFile(
+        path.join(
+          __static,
+          process.platform === "win32" ? "crawler.exe" : "crawler"
+        ),
+        [this.id, this.token, this.workers]
+      );
+    }
   }
   send(data) {
     if (this.socket) {

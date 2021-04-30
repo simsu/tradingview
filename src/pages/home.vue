@@ -746,118 +746,24 @@ export default {
       const set = this.config.map((item) =>
         this.range(item.s, item.e, item.u, item.r)
       );
-      const start = this.start.split("-");
-      const end = this.end.split("-");
-      const staticSet = [
-        this.leverage,
-        +start[0],
-        +end[0],
-        +start[1],
-        +end[1],
-        +start[2],
-        +end[2],
-      ];
       this.$store.dispatch(
         "setTotal",
         set.reduce((p, c) => p * c.length, 1)
       );
-      set[0].forEach((s0) => {
-        set[1].forEach((s1) => {
-          set[2].forEach((s2) => {
-            set[3].forEach((s3) => {
-              set[4].forEach((s4) => {
-                set[5].forEach((s5) => {
-                  set[6].forEach((s6) => {
-                    set[7].forEach((s7) => {
-                      set[8].forEach((s8) => {
-                        set[9].forEach((s9) => {
-                          set[10].forEach((s10) => {
-                            set[11].forEach((s11) => {
-                              set[12].forEach((s12) => {
-                                set[13].forEach((s13) => {
-                                  set[14].forEach((s14) => {
-                                    set[15].forEach((s15) => {
-                                      set[16].forEach((s16) => {
-                                        set[17].forEach((s17) => {
-                                          set[18].forEach((s18) => {
-                                            set[19].forEach((s19) => {
-                                              set[20].forEach((s20) => {
-                                                set[21].forEach((s21) => {
-                                                  set[22].forEach((s22) => {
-                                                    set[23].forEach((s23) => {
-                                                      set[24].forEach((s24) => {
-                                                        set[25].forEach(
-                                                          (s25) => {
-                                                            set[26].forEach(
-                                                              (s26) => {
-                                                                set[27].forEach(
-                                                                  (s27) => {
-                                                                    window.electron.send(
-                                                                      JSON.stringify(
-                                                                        [
-                                                                          ...staticSet,
-                                                                          s0,
-                                                                          s1,
-                                                                          s2,
-                                                                          s3,
-                                                                          s4,
-                                                                          s5,
-                                                                          s6,
-                                                                          s7,
-                                                                          s8,
-                                                                          s9,
-                                                                          s10,
-                                                                          s11,
-                                                                          s12,
-                                                                          s13,
-                                                                          s14,
-                                                                          s15,
-                                                                          s16,
-                                                                          s17,
-                                                                          s18,
-                                                                          s19,
-                                                                          s20,
-                                                                          s21,
-                                                                          s22,
-                                                                          s23,
-                                                                          s24,
-                                                                          s25,
-                                                                          s26,
-                                                                          s27,
-                                                                        ]
-                                                                      )
-                                                                    );
-                                                                  }
-                                                                );
-                                                              }
-                                                            );
-                                                          }
-                                                        );
-                                                      });
-                                                    });
-                                                  });
-                                                });
-                                              });
-                                            });
-                                          });
-                                        });
-                                      });
-                                    });
-                                  });
-                                });
-                              });
-                            });
-                          });
-                        });
-                      });
-                    });
-                  });
-                });
-              });
-            });
-          });
-        });
-      });
+      const start = this.start.split("-");
+      const end = this.end.split("-");
+      window.electron.send(
+        JSON.stringify({
+          leverage: this.leverage,
+          sy: +start[0],
+          sm: +start[1],
+          sd: +start[2],
+          ey: +end[0],
+          em: +end[1],
+          ed: +end[2],
+          data: set,
+        })
+      );
       this.disabled = false;
       this.btnText = "확인";
       this.$router.push("/processing");
