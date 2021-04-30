@@ -119,16 +119,13 @@ export class Server {
     this.onResultChange = fn;
   }
   execute() {
-    const test = false;
-    if (test) {
-      this.process = execFile(
-        path.join(
-          __static,
-          process.platform === "win32" ? "crawler.exe" : "crawler"
-        ),
-        [this.id, this.token, this.workers]
-      );
-    }
+    this.process = execFile(
+      path.join(
+        __static,
+        process.platform === "win32" ? "crawler.exe" : "crawler"
+      ),
+      [this.id, this.token, this.workers]
+    );
   }
   send(data) {
     if (this.socket) {
